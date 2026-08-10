@@ -137,7 +137,7 @@ com `X-Event-Id` (vs. exactly-once), reuso máximo dos padrões de código já e
   focada em HMAC e geração de secret (`TRANSCRICAO.md` [09:46] Sofia).
 - Comunicação dos clientes (Atlas, MaxDistribuição, Nova Cargo) pelo time de produto
   sobre o novo mecanismo e o contrato de deduplicação — responsabilidade do Marcos, via
-  portal de desenvolvedor (`TRANSCRICAO.md` [09:26][09:36][09:40] Marcos).
+  portal de desenvolvedor (`TRANSCRICAO.md` [09:26][09:40][09:47][09:49] Marcos).
 
 ## Riscos e mitigação
 

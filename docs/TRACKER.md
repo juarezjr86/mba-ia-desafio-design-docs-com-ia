@@ -28,7 +28,7 @@ origem (regra de `CLAUDE.md`).
 | PRD-FR-11 | docs/PRD.md | Requisito Funcional | Rotação de secret com grace period de 24h | TRANSCRICAO | [09:21] Sofia |
 | PRD-FR-12 | docs/PRD.md | Requisito Funcional | `X-Event-Id` para deduplicação no cliente | TRANSCRICAO | [09:25] Diego |
 | PRD-NFR-01 | docs/PRD.md | Requisito Não Funcional | Timeout de 10s por chamada HTTP do worker | TRANSCRICAO | [09:42] Diego |
-| PRD-NFR-02 | docs/PRD.md | Requisito Não Funcional | Limite de 64KB no payload, erro se exceder | TRANSCRICAO | [09:23] Sofia |
+| PRD-NFR-02 | docs/PRD.md | Requisito Não Funcional | Limite de 64KB no payload, erro se exceder (tema levantado por Sofia, valor de 64KB de Diego) | TRANSCRICAO | [09:23][09:24] Sofia, Diego |
 | PRD-NFR-03 | docs/PRD.md | Requisito Não Funcional | HTTPS obrigatório na comunicação de webhook | TRANSCRICAO | [09:23] Sofia |
 | PRD-NFR-04 | docs/PRD.md | Requisito Não Funcional | Garantia at-least-once (nunca exactly-once) | TRANSCRICAO | [09:24] Diego |
 | PRD-NFR-05 | docs/PRD.md | Requisito Não Funcional | Feature não pode degradar robustez de `changeStatus` | TRANSCRICAO | [09:40] Bruno |

@@ -17,7 +17,10 @@ apontou em [09:04] que inserir uma chamada HTTP síncrona nesse fluxo bloquearia
 mudança de status de outros pedidos caso o cliente destino esteja lento, e que não há
 como fazer rollback de uma mudança de status já efetivada caso o cliente esteja fora do
 ar. Era preciso desacoplar a emissão do evento da entrega do evento, sem perder a
-garantia de que todo `changeStatus` bem-sucedido gera exatamente um evento.
+garantia de que todo `changeStatus` bem-sucedido gera um evento por endpoint elegível
+(zero se nenhum endpoint do customer estiver inscrito naquele status, um por endpoint
+se houver mais de um inscrito — ver [FDD](../FDD.md#objetivos-técnicos)), nunca um
+status mudado sem o evento correspondente registrado quando havia inscrição.
 
 ## Decisão
 

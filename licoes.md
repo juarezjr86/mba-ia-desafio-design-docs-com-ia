@@ -390,7 +390,34 @@ problemas reais que duas rodadas de autorrevisão não pegaram — a maioria env
 números que o próprio pacote usava para provar sua própria integridade. Todos
 corrigidos e propagados entre os documentos.
 
+## Adendo — a mesma técnica, aplicada de novo, achou o que a primeira rodada deixou passar
+
+Depois de commitar e publicar as correções da avaliação Opus, uma **quarta camada** —
+outro subagente independente, desta vez em Fable, instruído explicitamente a não
+confiar nas correções anteriores e reconferir tudo — encontrou o padrão mais
+importante de toda a produção: a correção "um evento por endpoint elegível" tinha sido
+aplicada no FDD, mas não no `ADR-001`, que ainda afirmava "gera exatamente um evento".
+Mesmo problema, documento diferente, não propagado. O mesmo aconteceu com o domínio de
+status da outbox: o `ADR-002` ainda descrevia `pendente/processando/falhou/entregue`
+enquanto o FDD (já corrigido) tinha fixado o modelo final em `pending`/`delivered`
+sem status intermediário.
+
+Isso generaliza a lição: **corrigir um documento não corrige o pacote.** Numa
+documentação com múltiplos arquivos que se referenciam e se repetem em alturas
+diferentes (a mesma decisão aparece no ADR, no RFC e no FDD, cada um com seu nível de
+detalhe), toda correção precisa ser buscada em todos os lugares onde a informação
+original também apareceu — e isso não escala bem para revisão manual feita pela mesma
+pessoa/IA que já decidiu, em rodadas anteriores, que "já corrigi isso". Cada rodada de
+revisão independente sucessiva (autor → autorrevisão → Opus → Fable) encontrou algo
+que a anterior não viu, incluindo resíduos das correções da rodada logo antes dela.
+Isso não é sinal de processo ruim — é o oposto: é o processo funcionando como
+desenhado. A pergunta não é "quando vamos parar de achar problemas", é "quando o custo
+de mais uma rodada deixa de valer a pena frente ao que resta de risco real" — e depois
+de 4 camadas, sem nenhum item novo tocando um critério de aceite obrigatório, esse
+ponto foi atingido.
+
 ## Próximos passos
 
-Nenhum de produção. Entrega final, revisada em 3 camadas (autor, autorrevisão em 2
-rodadas, avaliação docente independente), commitada e publicada no fork público.
+Nenhum de produção. Entrega final, revisada em 4 camadas (autor, autorrevisão em 2
+rodadas, avaliação docente independente em Opus, revisão independente em Fable),
+commitada e publicada no fork público.

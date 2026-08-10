@@ -6,7 +6,7 @@ Este documento detalha o "como construir" da feature de Webhooks proposta em
 [RFC](./RFC.md) e decidida nos [ADRs](./adrs/README.md). É o nível de detalhamento
 suficiente para um desenvolvedor começar a implementar sem precisar reabrir a
 transcrição da reunião. Toda referência a arquivo de código é um caminho real,
-confirmado no repositório-base (ver `../TRACKER.md` para a rastreabilidade completa).
+confirmado no repositório-base (ver `./TRACKER.md` para a rastreabilidade completa).
 
 ## Objetivos técnicos
 
@@ -54,7 +54,8 @@ forma direta na reunião (não são questões em aberto, não constam no RFC).
    `id` (UUID), `webhook_endpoint_id`, `event_id` (UUID, vira `X-Event-Id`),
    `event_type = "order.status_changed"`, `payload` (JSON já renderizado — snapshot do
    estado no momento da inserção, `TRANSCRICAO.md` [09:52] Larissa/Diego/Bruno),
-   `status = "pending"`, `attempts = 0`, `created_at`.
+   `status = "pending"`, `attempts = 0`, `next_attempt_at = null` (elegível para
+   processamento imediato no próximo ciclo do worker), `created_at`.
 5. Se a inserção falhar, a exceção propaga e todo o `$transaction` de `changeStatus`
    sofre rollback — status do pedido não muda sem o evento correspondente
    (`TRANSCRICAO.md` [09:40][09:41] Bruno, Diego).

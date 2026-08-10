@@ -157,6 +157,25 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    rodada: uma afirmação sobre o próprio processo de verificação ("contei
    exaustivamente") é tão sujeita a erro quanto qualquer outra afirmação de conteúdo —
    e é mais perigosa, porque desarma quem está revisando.
+8. **Terceira camada de revisão, agora com subagente Fable, instruído explicitamente a
+   não confiar nas correções anteriores e reconferir tudo do zero.** Confirmou as 6
+   correções da rodada Opus, exceto uma: a correção "um evento por endpoint elegível"
+   tinha sido aplicada só no FDD, não no `ADR-001`, que ainda dizia "gera exatamente um
+   evento" — contradição não propagada entre documentos do mesmo pacote. Achou também:
+   `ADR-002` descrevendo um domínio de status da outbox (`pendente/processando/falhou/
+   entregue`) que a decisão de DLQ, fechada depois na mesma reunião, tornou obsoleto
+   frente ao modelo final do FDD (`pending`/`delivered`, sem status `failed`
+   intermediário); uma citação `[09:36] Marcos` no PRD apontando para uma fala sem
+   relação com o texto ao lado (o `[09:36]` de Marcos é sobre CRUD de webhook, não
+   sobre comunicação a clientes); um caminho relativo errado no FDD (`../TRACKER.md`
+   a partir de `docs/FDD.md` aponta para a raiz do repositório, não para
+   `docs/TRACKER.md`); e uma linha do Tracker (limite de 64KB) atribuindo a decisão só
+   a quem levantou o tema (Sofia), não a quem definiu o valor (Diego). Cada rodada de
+   revisão independente encontrou resíduos que a rodada anterior — inclusive uma
+   rodada de IA diferente, mais forte — não tinha propagado para todos os documentos
+   do pacote. Isso é o padrão mais importante de toda a produção: correção aplicada em
+   um documento não significa correção propagada a todos os documentos que compartilham
+   aquela informação.
 
 ## Como navegar a entrega
 

@@ -29,10 +29,16 @@ API, mas instancia seu **próprio `PrismaClient`**, porque `PrismaClient` é por
 processo (`TRANSCRICAO.md` [09:29][09:30] Diego, Bruno) — mesmo padrão de composição
 manual de dependências usado em `src/app.ts` (`buildControllers`), sem framework de DI.
 
-A tabela `webhook_outbox` deve ter índice em `status` (pendente/processando/falhou/
-entregue) e em `created_at`, para o worker ler eficientemente os eventos pendentes mais
-antigos (`TRANSCRICAO.md` [09:08] Diego), seguindo o padrão de índices já usado em
-`prisma/schema.prisma` (ex.: `@@index([status])`, `@@index([createdAt])` em `Order`).
+A tabela `webhook_outbox` deve ter índice em `status` e em `created_at`, para o worker
+ler eficientemente os eventos pendentes mais antigos (`TRANSCRICAO.md` [09:08] Diego —
+Diego cita nesse momento um domínio de status mais amplo, `pendente/processando/
+falhou/entregue`; o domínio final, fechado depois na mesma reunião junto com a decisão
+de retry/DLQ, é mais simples — ver [ADR-003](./ADR-003-retry-com-backoff-exponencial-e-dlq.md)
+e [FDD](../FDD.md#2-processamento-pelo-worker): apenas `pending`/`delivered`, sem
+status intermediário `failed` — falha definitiva remove a linha da outbox e insere em
+`webhook_dead_letter`, não a marca com um status), seguindo o padrão de índices já
+usado em `prisma/schema.prisma` (ex.: `@@index([status])`, `@@index([createdAt])` em
+`Order`).
 
 ## Alternativas Consideradas
 
