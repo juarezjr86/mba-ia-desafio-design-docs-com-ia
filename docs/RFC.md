@@ -43,9 +43,11 @@ normalmente?
 
 1. **Emissão desacoplada via Outbox** (ver [ADR-001](./adrs/ADR-001-outbox-pattern-no-mysql.md)).
    Dentro da mesma transação de `changeStatus`, uma função `publishWebhookEvent(tx, order, fromStatus, toStatus)`
-   insere um evento (payload já renderizado/snapshot no momento da mudança) na tabela
-   `webhook_outbox`, filtrando apenas os webhooks do customer que estão inscritos
-   naquele status (`TRANSCRICAO.md` [09:33][09:34][09:41][09:52]). Se a inserção falhar,
+   insere um evento por endpoint elegível (payload já renderizado/snapshot no momento
+   da mudança) na tabela `webhook_outbox`, filtrando apenas os webhooks do customer que
+   estão inscritos naquele status — zero linhas se nenhum estiver inscrito, uma por
+   endpoint se houver mais de um (`TRANSCRICAO.md` [09:33][09:34][09:41][09:52]). Se a
+   inserção falhar,
    a transação inteira sofre rollback — não existe caso de status mudar sem o evento
    correspondente ser registrado.
 2. **Entrega via worker dedicado** (ver [ADR-002](./adrs/ADR-002-worker-separado-com-polling.md)).

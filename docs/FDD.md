@@ -24,9 +24,9 @@ confirmado no repositório-base (ver `./TRACKER.md` para a rastreabilidade compl
 
 ## Escopo e exclusões
 
-**Dentro do escopo:** CRUD de configuração de webhook; emissão via outbox; worker de
-entrega com retry/backoff/DLQ; assinatura HMAC; histórico de entregas; replay manual
-de DLQ.
+**Dentro do escopo:** CRUD de configuração de webhook; rotação de secret com grace
+period de 24h; emissão via outbox; worker de entrega com retry/backoff/DLQ; assinatura
+HMAC; histórico de entregas; replay manual de DLQ.
 
 **Fora do escopo** (lista completa e origem de cada item em
 [PRD — Fora de escopo](./PRD.md#fora-de-escopo)): notificação proativa por e-mail ao
@@ -191,6 +191,29 @@ Mesmo formato de objeto webhook usado em `GET /api/v1/webhooks` (sem o campo
 ### `DELETE /api/v1/webhooks/:id`
 
 Remove o cadastro. Response `204 No Content`. Erro: `404 WEBHOOK_NOT_FOUND`.
+
+### `POST /api/v1/webhooks/:id/rotate-secret`
+
+Gera uma nova secret para o endpoint. A secret anterior permanece válida em paralelo
+por 24 horas (grace period), depois é invalidada — decisão fechada em
+[ADR-004](./adrs/ADR-004-hmac-sha256-com-secret-por-endpoint.md)
+(`TRANSCRICAO.md` [09:21] Sofia: "Endpoint pro cliente conseguir pedir nova secret pela
+API [...] a antiga fica válida por 24 horas em paralelo").
+
+Response `200 OK`:
+```json
+{
+  "id": "2b0e6f2a-2222-4a2b-9c3d-000000000002",
+  "secret": "whsec_9a3f7d...",
+  "previousSecretValidUntil": "2026-08-10T12:00:00.000Z"
+}
+```
+
+A nova secret só é retornada nesta resposta, seguindo o mesmo padrão de
+`POST /api/v1/webhooks`. Durante a janela `previousSecretValidUntil`, o worker aceita
+HMAC calculado com qualquer uma das duas secrets ao entregar eventos para esse
+endpoint — detalhe de implementação necessário para o grace period funcionar, não
+decidido em ata. Erro: `404 WEBHOOK_NOT_FOUND`.
 
 ### `GET /api/v1/webhooks/:id/deliveries`
 
@@ -382,6 +405,9 @@ integra com cada um:
   do endpoint.
 - Replay de DLQ só é aceito para usuários com role `ADMIN` e é registrado em log com o
   autor da ação.
+- Após `POST /webhooks/:id/rotate-secret`, envios ao endpoint continuam sendo aceitos
+  pelo cliente com HMAC calculado tanto pela secret nova quanto pela antiga até o
+  fim do grace period de 24h; passado esse prazo, só a secret nova é válida.
 
 ## Riscos e mitigação
 

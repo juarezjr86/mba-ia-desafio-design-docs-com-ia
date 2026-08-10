@@ -416,8 +416,30 @@ de mais uma rodada deixa de valer a pena frente ao que resta de risco real" — 
 de 4 camadas, sem nenhum item novo tocando um critério de aceite obrigatório, esse
 ponto foi atingido.
 
+## Segundo adendo — a 5ª camada achou o que as 4 anteriores não sabiam procurar
+
+Uma quinta rodada (Opus de novo, desta vez instruído explicitamente a caçar
+propagação incompleta entre documentos) confirmou as 5 correções da rodada Fable e
+achou algo de natureza diferente de tudo até então: não uma contradição entre duas
+afirmações existentes, mas um **requisito inteiro ausente** do documento que deveria
+implementá-lo. O PRD, o RFC e o `ADR-004` prometem rotação de secret com grace period
+de 24h — decisão fechada em ata ([09:21] Sofia). O FDD, que é o documento "acionável o
+suficiente para o dev começar a codar", **nunca especificava esse endpoint** — e
+ironicamente já citava a existência dele de passagem ("a secret [...] não é retornada
+[...] apenas na criação e na rotação"), sem nunca defini-lo.
+
+As 4 rodadas anteriores (autor × 2, Opus, Fable) tinham todas o mesmo ponto cego:
+procuravam por afirmações erradas ou inconsistentes entre si, nunca por promessas de
+um documento que o documento seguinte na cadeia (PRD → RFC → ADR → **FDD**) esquece de
+cumprir. Esse é um terceiro tipo de falha, distinto dos dois já catalogados nas
+Lições 01–03: (1) inventar conteúdo sem fonte, (2) vazar contexto de sessão como se
+fosse fato, e agora (3) **omitir silenciosamente** um requisito real ao descer de um
+documento de decisão para um documento de implementação. É o mais difícil de pegar
+dos três, porque não deixa nenhum texto errado para achar — deixa um vazio, e vazio
+não aparece em busca de texto.
+
 ## Próximos passos
 
-Nenhum de produção. Entrega final, revisada em 4 camadas (autor, autorrevisão em 2
-rodadas, avaliação docente independente em Opus, revisão independente em Fable),
-commitada e publicada no fork público.
+Nenhum de produção. Entrega final, revisada em 5 camadas (autor, autorrevisão em 2
+rodadas, avaliação docente independente em Opus, revisão independente em Fable,
+varredura de consistência cruzada em Opus), commitada e publicada no fork público.

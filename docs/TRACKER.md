@@ -81,6 +81,7 @@ origem (regra de `CLAUDE.md`).
 | FDD-CONTRATO-03 | docs/FDD.md | Contrato | `PATCH /webhooks/:id` | TRANSCRICAO | [09:33] Bruno |
 | FDD-CONTRATO-04 | docs/FDD.md | Contrato | `GET /webhooks/:id/deliveries` — últimas 100 entregas | TRANSCRICAO | [09:34] Marcos |
 | FDD-CONTRATO-05 | docs/FDD.md | Contrato | `POST /admin/webhooks/dead-letter/:id/replay` | TRANSCRICAO | [09:18] Diego |
+| FDD-CONTRATO-09 | docs/FDD.md | Contrato | `POST /webhooks/:id/rotate-secret` — secret antiga válida 24h em paralelo | TRANSCRICAO | [09:21] Sofia |
 | FDD-CONTRATO-06 | docs/FDD.md | Contrato | Payload de evento: campos e exclusão de `items` | TRANSCRICAO | [09:43] Diego |
 | FDD-CONTRATO-07 | docs/FDD.md | Contrato | Headers `X-Event-Id`, `X-Signature`, `X-Timestamp`, `X-Webhook-Id` | TRANSCRICAO | [09:44] Diego, Sofia |
 | FDD-CONTRATO-08 | docs/FDD.md | Hipótese | Secret não retornada em GET/listagem — inferência de segurança, não decidida na reunião | Não informado (marcado como hipótese no próprio FDD) | — |
@@ -113,10 +114,11 @@ origem (regra de `CLAUDE.md`).
 Contagem exaustiva (verificada por busca automatizada na tabela acima, não por
 estimativa):
 
-- Total de linhas: 99 (a contagem anterior desta seção dizia "100" — estava errada;
-  recontada em 2ª auditoria por revisor independente, ver `README.md` iteração 7).
+- Total de linhas: 100 (99 até a rodada anterior de revisão + 1 nova linha,
+  `FDD-CONTRATO-09`, para o endpoint de rotação de secret adicionado ao FDD nesta
+  rodada — ver `README.md` iteração 9).
 - Fonte `CODIGO`: 17 linhas (≥5 exigido).
-- Fonte `TRANSCRICAO`: 81 linhas com timestamp válido (81% do total, ≥70% exigido).
+- Fonte `TRANSCRICAO`: 82 linhas com timestamp válido (82% do total, ≥70% exigido).
 - 1 linha (`FDD-CONTRATO-08`) marcada como "Não informado" — hipótese/inferência sem
   origem em transcrição ou código — mantida no tracker exatamente para deixar essa
   lacuna visível, não para escondê-la. Não conta nem como `CODIGO` nem como

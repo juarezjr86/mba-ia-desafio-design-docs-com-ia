@@ -46,7 +46,8 @@ Checklist preenchida abaixo.
 - [x] Arquivo existe e está em Markdown
 - [x] Todas as seções obrigatórias presentes
 - [x] "Contratos públicos" com ≥4 endpoints HTTP, payload de exemplo e status codes —
-      5 endpoints confirmados
+      7 endpoints confirmados (inclui rotação de secret, adicionada na 5ª camada de
+      revisão — estava em PRD/RFC/ADR-004 mas ausente do FDD)
 - [x] Matriz de erros com prefixo `WEBHOOK_` — 7 códigos confirmados
 - [x] "Integração com o sistema existente" com ≥4 caminhos reais — 6 confirmados
 - [x] "Observabilidade" cita métricas, logs e tracing — as 3 presentes
@@ -61,9 +62,9 @@ Checklist preenchida abaixo.
 ### Tracker (`docs/TRACKER.md`)
 
 - [x] Arquivo existe, formato de tabela correto
-- [x] ≥80% dos itens identificáveis com linha correspondente — 99 linhas cobrindo
+- [x] ≥80% dos itens identificáveis com linha correspondente — 100 linhas cobrindo
       PRD/RFC/FDD/ADRs
-- [x] ≥70% das linhas com Fonte = TRANSCRICAO e timestamp válido — 80/99 (~81%)
+- [x] ≥70% das linhas com Fonte = TRANSCRICAO e timestamp válido — 82/100 (82%)
 - [x] ≥5 linhas com Fonte = CODIGO e caminho real — 17 confirmadas
 
 ### README (`README.md`)
@@ -72,7 +73,7 @@ Checklist preenchida abaixo.
       Prompts customizados, Iterações e ajustes, Como navegar)
 - [x] ≥1 ferramenta de IA listada — Claude Code
 - [x] ≥2 prompts customizados em bloco de código — 2 confirmados
-- [x] ≥2 iterações/ajustes concretos descritos — 8 confirmados
+- [x] ≥2 iterações/ajustes concretos descritos — 9 confirmados
 
 ### Consistência geral
 

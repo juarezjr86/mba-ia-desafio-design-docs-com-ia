@@ -157,7 +157,7 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    rodada: uma afirmação sobre o próprio processo de verificação ("contei
    exaustivamente") é tão sujeita a erro quanto qualquer outra afirmação de conteúdo —
    e é mais perigosa, porque desarma quem está revisando.
-8. **Terceira camada de revisão, agora com subagente Fable, instruído explicitamente a
+8. **Quarta camada de revisão, agora com subagente Fable, instruído explicitamente a
    não confiar nas correções anteriores e reconferir tudo do zero.** Confirmou as 6
    correções da rodada Opus, exceto uma: a correção "um evento por endpoint elegível"
    tinha sido aplicada só no FDD, não no `ADR-001`, que ainda dizia "gera exatamente um
@@ -176,6 +176,24 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    do pacote. Isso é o padrão mais importante de toda a produção: correção aplicada em
    um documento não significa correção propagada a todos os documentos que compartilham
    aquela informação.
+9. **Quinta camada de revisão, de volta a Opus, agora instruído a caçar
+   especificamente esse padrão de propagação incompleta e a fazer uma varredura de
+   consistência cruzada fato por fato.** Confirmou as 5 correções da rodada Fable e
+   achou o problema mais sério de toda a produção até aqui — não um resíduo de
+   correção anterior, mas uma **lacuna original**: o FDD nunca especificava o endpoint
+   de rotação de secret, apesar de o PRD (`FR-11`), o RFC e o `ADR-004` exigirem
+   rotação com grace period de 24h ([09:21] Sofia) como requisito fechado — e o
+   próprio FDD já *pressupunha* a existência desse endpoint numa observação sobre a
+   listagem ("a secret não é retornada [...] apenas na criação e **na rotação**") sem
+   nunca documentá-lo. É a primeira vez que uma rodada encontra um requisito ausente
+   em vez de uma contradição entre afirmações já existentes — as 4 rodadas anteriores
+   focaram em coisas que os documentos diziam de forma errada ou inconsistente, e
+   nenhuma tinha perguntado "o que o PRD promete que o FDD nunca chega a construir?".
+   Corrigido: novo endpoint `POST /webhooks/:id/rotate-secret` no FDD (contrato,
+   critério de aceite, item de escopo), nova linha no Tracker
+   (`FDD-CONTRATO-09`), e números desatualizados em `TASKS/010` (contagem de
+   endpoints, percentual do Tracker) e uma inconsistência textual entre README e
+   `licoes.md` sobre qual rodada era a "terceira" vs. "quarta" camada de revisão.
 
 ## Como navegar a entrega
 
