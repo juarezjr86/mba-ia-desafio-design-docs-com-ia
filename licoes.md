@@ -36,7 +36,7 @@ Um LLM instruído a "gerar um PRD a partir dessa transcrição" tende a resumir 
 genérica e a preencher lacunas com conhecimento de mercado — silenciosamente. A defesa
 contra isso não é pedir "com cuidado" no prompt seguinte: é produzir, antes, um mapa
 onde cada afirmação já está presa a uma fonte (timestamp ou caminho de arquivo). Depois
-disso, escrever o PRD/RFC/FDD é essencially *transcrever do mapa*, não *interpretar a
+disso, escrever o PRD/RFC/FDD é essencialmente *transcrever do mapa*, não *interpretar a
 transcrição de novo* — o que reduz a superfície de alucinação.
 
 ## Conceitos aprendidos
@@ -279,5 +279,118 @@ documentos — ambos corrigidos e propagados ao Tracker e ao README.
 
 ## Próximos passos
 
-Entrega revisada pelo aluno; decisão sobre commit/push ao fork público do desafio, fora
-do escopo desta sessão de IA.
+Entrega revisada pelo aluno, commitada e enviada ao fork público (ver Lição 04).
+
+---
+
+# Lição 04 — Um segundo avaliador independente vale mais do que uma terceira releitura
+
+## Objetivo
+
+Entender por que, depois de duas rodadas de autorrevisão, a forma mais eficaz de achar
+o que restava de errado não foi "revisar de novo com mais cuidado" — foi delegar a
+avaliação para um agente novo, sem o contexto (e o viés) de quem produziu e já
+revisou os documentos duas vezes.
+
+## O que analisamos
+
+Pedido explícito do aluno: gerar um prompt e delegar a um subagente rodando em um
+modelo mais forte (Opus) para assumir o papel de professor, ler o enunciado oficial
+direto do repositório do desafio no GitHub, e reavaliar a entrega do zero — sem
+herdar nada desta conversa.
+
+## O que foi produzido
+
+Um relatório de avaliação docente completo (resumo executivo, tabela por entregável,
+lista do que está coerente, lista do que diverge, veredito), e, a partir dele, 10
+correções aplicadas: 3 números de autoauditoria errados (`docs/TRACKER.md` dizia "100
+linhas" quando são 99; `README.md` dizia "80 TRANSCRICAO" quando o Tracker já tinha
+81; `TASKS/010` dizia "3 riscos" quando o PRD tem 4), uma ambiguidade de DLQ no FDD que
+contradizia uma decisão já fechada no ADR-003, uma contradição interna sobre "um
+evento" vs. "um evento por endpoint elegível", um `PATCH` no FDD que referenciava um
+endpoint `GET por id` inexistente no próprio documento, dois resíduos de texto em
+inglês ("also", "essencially") sobrevivendo a seis iterações de revisão, e 4 linhas do
+Tracker atribuindo uma decisão a quem só levantou o tema, não a quem decidiu.
+
+## Por que fizemos dessa forma
+
+Nas duas rodadas anteriores (Lições 02 e 03), eu estava revisando meu próprio
+trabalho, com a memória de tudo que já tinha checado — um viés de confirmação real:
+depois de verificar um número duas vezes e achá-lo certo, a terceira verificação tende
+a ser mais rápida e mais confiante, não mais rigorosa. Meu próprio `grep` de
+verificação da Lição 02 tinha um bug (contava a linha de cabeçalho da tabela do
+Tracker como se fosse uma linha de dado, inflando a contagem em +1) — e eu *confiei*
+nesse número errado duas vezes seguidas porque ele "batia" com o texto que eu mesmo
+tinha escrito. Um agente novo, com um prompt que pedia explicitamente para recontar
+tudo manualmente e não confiar em nenhuma alegação de contagem já feita dentro dos
+documentos, não carrega esse viés — ele não tem motivo para confiar em um número só
+porque já apareceu em três lugares.
+
+## Conceitos aprendidos
+
+- **Revisar o próprio trabalho tem um teto.** Depois de duas rodadas, os erros que
+  sobram tendem a ser exatamente os que a pessoa (ou IA) que escreveu o documento tem
+  mais dificuldade de ver — porque ela já decidiu, nas rodadas anteriores, que aquele
+  trecho estava certo.
+- **Delegar para um agente sem contexto não é redundância, é uma técnica de
+  verificação.** O valor específico de um subagente "fresh" (sem herdar a conversa) é
+  não herdar também os erros de raciocínio já cometidos — inclusive erros sobre "o que
+  já foi checado".
+- **O prompt de avaliação precisa proibir explicitamente confiar em números
+  pré-calculados.** A instrução "reconte você mesmo, não confie em nenhuma contagem já
+  feita dentro dos próprios documentos" foi o que efetivamente pegou o bug do `grep`
+  — sem essa instrução, um avaliador só leria "100 linhas, contagem exaustiva
+  verificada" e teria aceitado a alegação pelo tom de confiança do texto, não pelo
+  número em si.
+
+## Tecnologias e ferramentas envolvidas
+
+Claude Code (Agent tool, subagente `general-purpose` em Opus, sem herdar contexto da
+conversa principal — só o prompt escrito explicitamente para essa tarefa).
+
+## Conceitos de Engenharia de Software
+
+Equivalente direto a **code review por um segundo revisor humano** depois que o autor
+já se autorrevisou: a literatura de qualidade de software mostra reiteradamente que
+autorrevisão tem taxa de detecção de defeitos menor que revisão por terceiros,
+justamente pelo mesmo motivo — familiaridade com o próprio trabalho reduz a atenção a
+detalhes já "aceitos" mentalmente.
+
+## O que poderia dar errado
+
+Se o prompt de delegação não tivesse mandado o subagente ler o enunciado oficial
+*direto do GitHub* (em vez de confiar na cópia local `docs-desafio/ENUNCIADO.md`, que
+eu mesmo salvei), e se essa cópia local tivesse sido alterada por engano em algum
+momento, a avaliação teria herdado esse erro silenciosamente. Por isso o prompt pediu
+a fonte remota como primária e a local só como fallback.
+
+## Como a IA foi utilizada
+
+Um subagente Opus, delegado via `Agent` tool com um prompt de ~700 palavras
+detalhando papel, fontes de verdade, o que avaliar item a item, e o formato de saída
+exigido, rodou de forma assíncrona e devolveu um relatório estruturado. Cada achado
+foi reverificado manualmente (com `grep`/leitura direta) antes de qualquer correção
+ser aplicada — inclusive porque um dos achados do próprio relatório (a contagem "99,
+não 100") contradizia uma verificação minha anterior, e era preciso decidir quem
+estava certo antes de agir.
+
+## O que o aluno deve compreender
+
+Que pedir uma segunda opinião independente — de um agente sem o contexto e sem o viés
+de quem já revisou — é uma técnica de verificação legítima e mais forte que pedir para
+o mesmo agente "revisar de novo". E que mesmo o relatório de um avaliador externo
+merece ser conferido, não aceito de olhos fechados: um dos achados do subagente foi
+verificado contra o arquivo real antes de eu confiar nele, porque "um agente disse que
+está errado" não é mais confiável por si só do que "um agente disse que está certo".
+
+## Resumo
+
+Delegar a avaliação final para um subagente Opus sem contexto da conversa encontrou 6
+problemas reais que duas rodadas de autorrevisão não pegaram — a maioria envolvendo
+números que o próprio pacote usava para provar sua própria integridade. Todos
+corrigidos e propagados entre os documentos.
+
+## Próximos passos
+
+Nenhum de produção. Entrega final, revisada em 3 camadas (autor, autorrevisão em 2
+rodadas, avaliação docente independente), commitada e publicada no fork público.

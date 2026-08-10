@@ -110,7 +110,7 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    escondida atrás de uma frase que parece factual.
 4. **Cálculo de cobertura do Tracker.** A primeira versão da tabela do Tracker foi
    revisada linha a linha para confirmar contagem real de fontes (99 linhas, 17
-   `CODIGO`, 80 `TRANSCRICAO` com timestamp) antes de declarar os critérios de ≥80% de
+   `CODIGO`, 81 `TRANSCRICAO` com timestamp) antes de declarar os critérios de ≥80% de
    cobertura e ≥70% de fonte transcrição como atendidos — não foi uma estimativa, foi
    contagem exaustiva.
 5. **Revisão de profundidade sobre PRD e FDD, a pedido do usuário.** Uma segunda
@@ -138,6 +138,25 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    quebrada (`ADR-002` apontava para uma inexistente "Seção 6 do RFC"; a informação
    está de fato em "Impacto e riscos") e reforçou a citação de autoria do RFC com a
    fala real da Larissa em [09:50] ("Eu vou abrir o doc de design da feature").
+7. **Avaliação docente independente por um subagente Opus, sem contexto desta
+   conversa.** Delegado explicitamente para funcionar como segunda opinião real (leu o
+   enunciado oficial no GitHub, reavaliou o pacote do zero, recontando tudo). Achou 6
+   problemas reais que as duas rodadas anteriores não pegaram — o mais grave de todos:
+   a seção "Cobertura" do próprio `TRACKER.md` afirmava "100 linhas, contagem
+   exaustiva verificada por busca automatizada" quando o número real de linhas de
+   dados é **99** — meu `grep` de verificação anterior contava sem querer a linha de
+   cabeçalho da tabela como se fosse dado. Também achou: o `README.md` citando "80
+   TRANSCRICAO" quando o Tracker já tinha sido corrigido para 81 (dois documentos
+   contando a mesma tabela e chegando a números diferentes); `TASKS/010` declarando
+   "3 riscos" quando o PRD tem 4; o FDD deixando em aberto ("ou/ou") uma decisão de
+   DLQ que o ADR-003 já tinha fechado; uma contradição entre "emite exatamente um
+   evento" e "uma linha por endpoint elegível"; um `PATCH` referenciando um `GET por
+   id` que não existe no documento; e 4 linhas do Tracker citando quem *levantou* um
+   tema como se fosse quem *decidiu* (ex.: Marcos pergunta sobre e-mail de alerta,
+   quem decide descartar é Larissa). Todos corrigidos. A lição mais importante desta
+   rodada: uma afirmação sobre o próprio processo de verificação ("contei
+   exaustivamente") é tão sujeita a erro quanto qualquer outra afirmação de conteúdo —
+   e é mais perigosa, porque desarma quem está revisando.
 
 ## Como navegar a entrega
 

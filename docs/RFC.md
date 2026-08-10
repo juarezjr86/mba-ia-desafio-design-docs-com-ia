@@ -99,7 +99,7 @@ administrativo de DLQ.
 
 - **Impacto no fluxo crítico existente:** `OrderService.changeStatus` passa a incluir
   uma escrita adicional (na outbox) dentro da mesma transação — qualquer falha nessa
-  escrita agora also reverte a mudança de status. Mitigação: a escrita na outbox é uma
+  escrita agora também reverte a mudança de status. Mitigação: a escrita na outbox é uma
   inserção simples e local (mesmo banco, mesma transação), sem chamada de rede.
 - **Novo processo em produção** (worker) precisa de monitoramento e restart
   automático próprios — risco operacional novo que a API sozinha não tinha.

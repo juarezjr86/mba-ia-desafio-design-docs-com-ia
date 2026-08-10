@@ -9,9 +9,9 @@ origem (regra de `CLAUDE.md`).
 | ID | Documento | Tipo | Conteúdo (resumo) | Fonte | Localização |
 | --- | --- | --- | --- | --- | --- |
 | PRD-OBJ-01 | docs/PRD.md | Requisito Não Funcional | Latência-alvo <10s = definição de "tempo real" dos clientes | TRANSCRICAO | [09:02] Marcos |
-| PRD-ESCOPO-01 | docs/PRD.md | Restrição (fora de escopo) | E-mail de alerta ao cliente após falhas — adiado | TRANSCRICAO | [09:37] Marcos |
-| PRD-ESCOPO-02 | docs/PRD.md | Restrição (fora de escopo) | Dashboard visual para o cliente — fora de escopo | TRANSCRICAO | [09:39] Marcos |
-| PRD-ESCOPO-03 | docs/PRD.md | Restrição (fora de escopo) | Rate limiting de envio — "observar e decidir depois" | TRANSCRICAO | [09:38] Diego |
+| PRD-ESCOPO-01 | docs/PRD.md | Restrição (fora de escopo) | E-mail de alerta ao cliente após falhas — adiado (pergunta de Marcos, decisão de Larissa) | TRANSCRICAO | [09:37] Larissa |
+| PRD-ESCOPO-02 | docs/PRD.md | Restrição (fora de escopo) | Dashboard visual para o cliente — fora de escopo (pergunta de Marcos, decisão de Larissa) | TRANSCRICAO | [09:40] Larissa |
+| PRD-ESCOPO-03 | docs/PRD.md | Restrição (fora de escopo) | Rate limiting de envio — "observar e decidir depois" (tema levantado por Diego, decisão de Larissa) | TRANSCRICAO | [09:39] Larissa |
 | PRD-ESCOPO-04 | docs/PRD.md | Restrição (fora de escopo) | Múltiplos workers em paralelo — adiado | TRANSCRICAO | [09:13] Diego |
 | PRD-ESCOPO-05 | docs/PRD.md | Restrição (fora de escopo) | Garantia de ordering global — não exigida | TRANSCRICAO | [09:14] Marcos |
 | PRD-ESCOPO-06 | docs/PRD.md | Restrição (fora de escopo) | Arquivamento de eventos entregues — fora de escopo | TRANSCRICAO | [09:08] Diego |
@@ -20,7 +20,7 @@ origem (regra de `CLAUDE.md`).
 | PRD-FR-03 | docs/PRD.md | Requisito Funcional | Edição (PATCH) de webhook | TRANSCRICAO | [09:33] Bruno |
 | PRD-FR-04 | docs/PRD.md | Requisito Funcional | Remoção (DELETE) de webhook | TRANSCRICAO | [09:33] Bruno |
 | PRD-FR-05 | docs/PRD.md | Requisito Funcional | Listagem (GET) de webhooks do customer | TRANSCRICAO | [09:33] Bruno |
-| PRD-FR-06 | docs/PRD.md | Requisito Funcional | Filtragem de evento por status inscrito, na inserção | TRANSCRICAO | [09:34] Diego |
+| PRD-FR-06 | docs/PRD.md | Requisito Funcional | Filtragem de evento por status inscrito, na inserção (pergunta de Diego, formulação de Bruno) | TRANSCRICAO | [09:34] Bruno |
 | PRD-FR-07 | docs/PRD.md | Requisito Funcional | Assinatura HMAC-SHA256 do payload | TRANSCRICAO | [09:20] Sofia |
 | PRD-FR-08 | docs/PRD.md | Requisito Funcional | Retry com backoff até 5 tentativas antes de DLQ | TRANSCRICAO | [09:15] Diego |
 | PRD-FR-09 | docs/PRD.md | Requisito Funcional | Histórico das últimas 100 entregas | TRANSCRICAO | [09:34] Marcos |
@@ -113,7 +113,8 @@ origem (regra de `CLAUDE.md`).
 Contagem exaustiva (verificada por busca automatizada na tabela acima, não por
 estimativa):
 
-- Total de linhas: 100.
+- Total de linhas: 99 (a contagem anterior desta seção dizia "100" — estava errada;
+  recontada em 2ª auditoria por revisor independente, ver `README.md` iteração 7).
 - Fonte `CODIGO`: 17 linhas (≥5 exigido).
 - Fonte `TRANSCRICAO`: 81 linhas com timestamp válido (81% do total, ≥70% exigido).
 - 1 linha (`FDD-CONTRATO-08`) marcada como "Não informado" — hipótese/inferência sem

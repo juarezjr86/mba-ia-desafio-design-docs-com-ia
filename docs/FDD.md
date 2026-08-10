@@ -10,8 +10,10 @@ confirmado no repositório-base (ver `../TRACKER.md` para a rastreabilidade comp
 
 ## Objetivos técnicos
 
-- Emitir exatamente um evento de webhook por mudança de status de pedido relevante,
-  de forma atômica com a transação que efetiva essa mudança.
+- Emitir um evento de webhook por endpoint elegível (inscrito no `toStatus`) a cada
+  mudança de status de pedido relevante — um customer com múltiplos endpoints
+  inscritos no mesmo status recebe um evento por endpoint, não um único evento
+  compartilhado — de forma atômica com a transação que efetiva essa mudança.
 - Entregar o evento ao endpoint do cliente em, no pior caso determinístico, poucos
   segundos (ciclo de polling do worker), respeitando o teto de <10s combinado com os
   clientes (`TRANSCRICAO.md` [09:02] Marcos).
@@ -64,8 +66,10 @@ forma direta na reunião (não são questões em aberto, não constam no RFC).
    `TRANSCRICAO.md` [09:29][09:30] Diego, Bruno) e inicia um loop de polling a cada
    2000ms.
 2. A cada ciclo, `webhook.worker.ts` busca em `webhook_outbox` os eventos com
-   `status = "pending"` (ou `"failed"` com `next_attempt_at <= now()`), ordenados por
-   `created_at`, em lote pequeno (ex.: 20).
+   `status = "pending"` e `next_attempt_at <= now()` (na primeira tentativa,
+   `next_attempt_at` é nulo/já vencido), ordenados por `created_at`, em lote pequeno
+   (ex.: 20). O evento permanece com `status = "pending"` durante toda a janela de
+   retry — não existe um status intermediário `"failed"` neste modelo; ver Seção 3.
 3. Para cada evento: monta os headers (ver "Contratos públicos"), calcula HMAC sobre
    o `payload`, faz `POST` para a `url` do `webhook_endpoint`, com timeout de 10s
    (`TRANSCRICAO.md` [09:42] Diego).
@@ -84,9 +88,11 @@ forma direta na reunião (não são questões em aberto, não constam no RFC).
 
 ### 4. Dead Letter Queue (DLQ)
 
-1. Após a 5ª tentativa falhar, o worker move o evento: `status = "dead_letter"` em
-   `webhook_outbox` (ou remove e insere em `webhook_dead_letter`, mantendo `payload`,
-   `reason` da última falha e `failed_at` — `TRANSCRICAO.md` [09:18] Diego).
+1. Após a 5ª tentativa falhar, o worker **remove a linha de `webhook_outbox` e insere
+   uma nova em `webhook_dead_letter`** (tabela separada, decisão fechada em
+   [ADR-003](./adrs/ADR-003-retry-com-backoff-exponencial-e-dlq.md) — não um status
+   dentro da própria outbox, ver alternativa descartada no ADR), mantendo `payload`,
+   `reason` da última falha e `failed_at` (`TRANSCRICAO.md` [09:18] Diego).
 2. `POST /admin/webhooks/dead-letter/:id/replay` (role `ADMIN`,
    `requireRole('ADMIN')` de `src/middlewares/auth.middleware.ts`) recoloca o evento em
    `webhook_outbox` com `status = "pending"` e `attempts = 0`. A ação é logada via
@@ -167,7 +173,18 @@ Request:
 { "events": ["PAID", "SHIPPED", "DELIVERED"] }
 ```
 
-Response `200 OK`: mesmo formato do `GET` por id. Erros: `404 WEBHOOK_NOT_FOUND`,
+Response `200 OK`:
+```json
+{
+  "id": "2b0e6f2a-2222-4a2b-9c3d-000000000002",
+  "customerId": "b3f1b2e0-1111-4a2b-9c3d-000000000001",
+  "url": "https://cliente.example.com/webhooks/oms",
+  "events": ["PAID", "SHIPPED", "DELIVERED"],
+  "active": true
+}
+```
+Mesmo formato de objeto webhook usado em `GET /api/v1/webhooks` (sem o campo
+`secret`, pelos mesmos motivos descritos acima). Erros: `404 WEBHOOK_NOT_FOUND`,
 `400 WEBHOOK_INVALID_URL`.
 
 ### `DELETE /api/v1/webhooks/:id`

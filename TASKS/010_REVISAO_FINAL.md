@@ -30,7 +30,7 @@ Checklist preenchida abaixo.
 - [x] ≥8 requisitos funcionais — 12 confirmados (`PRD-FR-01`..`12`)
 - [x] ≥1 objetivo com métrica e meta quantitativa — latência <10s (PRD-OBJ-01)
 - [x] "Fora de escopo" com ≥2 itens descartados/adiados — 6 confirmados
-- [x] "Riscos" com ≥2 riscos com probabilidade, impacto e mitigação — 3 confirmados
+- [x] "Riscos" com ≥2 riscos com probabilidade, impacto e mitigação — 4 confirmados
 
 ### RFC (`docs/RFC.md`)
 
@@ -72,7 +72,7 @@ Checklist preenchida abaixo.
       Prompts customizados, Iterações e ajustes, Como navegar)
 - [x] ≥1 ferramenta de IA listada — Claude Code
 - [x] ≥2 prompts customizados em bloco de código — 2 confirmados
-- [x] ≥2 iterações/ajustes concretos descritos — 6 confirmados
+- [x] ≥2 iterações/ajustes concretos descritos — 7 confirmados
 
 ### Consistência geral
 
