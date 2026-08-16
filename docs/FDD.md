@@ -102,7 +102,9 @@ forma direta na reunião (não são questões em aberto, não constam no RFC).
 
 ## Contratos públicos
 
-Todos os endpoints ficam sob `/api/v1/webhooks`, agregados em
+Os endpoints de configuração e consulta ficam sob `/api/v1/webhooks`; o replay
+administrativo de DLQ fica sob `/api/v1/admin/webhooks` (ver detalhamento dos dois
+routers na seção "Integração com o sistema existente"). Ambos são agregados em
 `src/routes/index.ts` (`router.use('/webhooks', buildWebhookRouter(...))`,
 seguindo o padrão de `buildOrderRouter`). CRUD exige apenas `authenticate` (JWT
 normal); `customer_id` vem do body/path, não do JWT, pois o JWT é de usuário

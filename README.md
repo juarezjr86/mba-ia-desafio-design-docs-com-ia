@@ -206,9 +206,11 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
     resíduo de propagação ainda aparecendo.
 11. **Auditoria de estado antes da entrega final, com recontagem independente por
     `grep` de cada número auto-relatado.** As contagens de RFs (12), RNFs (7),
-    endpoints (9), códigos `WEBHOOK_` (7), ADRs (6) e fontes do Tracker (17 `CODIGO`,
-    83 `TRANSCRICAO`) conferiram. A exceção foi uma lacuna de cobertura em sentido
-    inverso ao da iteração 9: lá o PRD prometia algo que o FDD não construía; aqui o
+    endpoints (7), códigos `WEBHOOK_` (7), ADRs (6) e fontes do Tracker (17 `CODIGO`,
+    83 `TRANSCRICAO`) conferiram — com uma ressalva que só a iteração 12 pegaria: a
+    contagem de endpoints saiu errada (9) na primeira redação deste parágrafo, embora
+    o FDD sempre tenha tido 7. O achado desta rodada foi uma lacuna de cobertura em
+    sentido inverso ao da iteração 9: lá o PRD prometia algo que o FDD não construía; aqui o
     PRD listava um risco real — "worker fica fora do ar e para de processar a outbox"
     ([09:11] Diego) — que **nenhuma linha do Tracker cobria** do lado do PRD, embora o
     mesmo fato aparecesse rastreado a partir do FDD (`FDD-RISK-01`). O item existia e
@@ -217,6 +219,22 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
     101 linhas). Lição embutida: verificar cobertura do Tracker por *documento de
     origem*, não só pelo total agregado — um percentual global saudável esconde
     seções inteiras sem rastreabilidade.
+12. **Avaliação final simulada em Fable, com a IA no papel do professor que escreveu o
+    enunciado, avaliando o pacote contra os próprios critérios de aceite.** Parecer:
+    aprovado, sem nenhuma falha grave — os critérios de aceite atendidos, 12
+    afirmações factuais reconferidas contra a transcrição e 17/17 caminhos de código
+    confirmados como existentes. A rodada encontrou duas correções, ambas de
+    metadiscurso e não de conteúdo: (a) a contagem de endpoints na iteração 11 dizia 9
+    onde o FDD tem 7 — o erro nasceu de contar os IDs `FDD-CONTRATO-01..09` do Tracker
+    como se todos fossem endpoints, quando dois deles (`-06` payload de entrega, `-07`
+    headers) são contratos de mensagem; (b) a frase de abertura dos contratos do FDD
+    dizia que "todos os endpoints ficam sob `/api/v1/webhooks`", enquanto o replay
+    administrativo fica sob `/api/v1/admin/webhooks` — o próprio FDD já registrava os
+    dois routers corretamente na seção de integração. Lição embutida, e a mais dura do
+    projeto: o número que descreve o *trabalho* recebeu, durante toda a produção, menos
+    escrutínio que o número que descreve o *sistema* — e o erro sobreviveu justamente
+    dentro do parágrafo que celebrava a recontagem por `grep`. Afirmação sobre o
+    próprio rigor desarma o revisor, inclusive o que a escreveu.
 
 ## Como navegar a entrega
 

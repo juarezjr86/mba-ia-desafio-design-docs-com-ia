@@ -477,10 +477,36 @@ Isto fecha um trio com as Lições 04 e seus adendos: a informação pode estar 
 lugares **sem o vínculo entre eles** — e este terceiro caso é o mais silencioso dos
 três, porque nenhum documento está errado quando lido isoladamente.
 
+## Quinto adendo — o número que descreve o trabalho vale menos que o que descreve o sistema
+
+Uma sétima camada, em Fable, com a IA no papel do professor avaliando o pacote contra o
+enunciado, aprovou a entrega sem falha grave — e achou um erro que as rodadas
+anteriores não tinham achado: o README dizia "endpoints (9)" onde o FDD tem 7. O erro
+nasceu de uma confusão de unidade de contagem: os IDs `FDD-CONTRATO-01..09` do Tracker
+são nove **contratos**, mas dois deles descrevem o payload de entrega e os headers, não
+endpoints. Contar IDs em vez de contar cabeçalhos de endpoint deu 9.
+
+O que dói na lição não é o erro de contagem — é onde ele estava. Sobreviveu dentro do
+parágrafo que anunciava a "recontagem independente por `grep` de cada número
+auto-relatado". Durante todo o projeto, os números que descrevem o **sistema** (5
+tentativas, 2s, 64KB, 24h, 10s) foram conferidos contra a transcrição em todas as
+rodadas e nunca erraram uma vez sequer. Os números que descrevem o **trabalho**
+(quantos endpoints, quantas linhas, quantos por cento) erraram repetidamente — nas
+iterações 9, 11 e 12.
+
+A causa é psicológica antes de ser metodológica: um número sobre o sistema tem uma
+fonte externa evidente contra a qual conferir, e um número sobre o trabalho parece
+óbvio demais para merecer conferência — "eu acabei de escrever isso, eu sei quantos
+são". A afirmação sobre o próprio rigor desarma o revisor, e desarma primeiro quem a
+escreveu. Regra prática que fica: um número sobre o próprio pacote precisa do comando
+de contagem **colado ao lado**, ou não deve ser escrito.
+
 ## Próximos passos
 
 Nenhum de produção. Entrega final, revisada em 6 camadas (autor, autorrevisão em 2
 rodadas, avaliação docente independente em Opus, revisão independente em Fable,
-varredura de consistência cruzada em Opus, verificação de propagação em Sonnet) mais
-uma auditoria de estado com recontagem independente antes do commit final, commitada e
-publicada no fork público.
+varredura de consistência cruzada em Opus, verificação de propagação em Sonnet), mais
+uma auditoria de estado com recontagem independente e uma avaliação final simulada em
+Fable — a IA no papel do professor, avaliando contra o enunciado — que aprovou o pacote
+sem falha grave e rendeu as duas últimas correções. Commitada e publicada no fork
+público.

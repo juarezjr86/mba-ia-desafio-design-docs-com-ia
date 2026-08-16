@@ -74,7 +74,7 @@ Checklist preenchida abaixo.
       Prompts customizados, Iterações e ajustes, Como navegar)
 - [x] ≥1 ferramenta de IA listada — Claude Code
 - [x] ≥2 prompts customizados em bloco de código — 2 confirmados
-- [x] ≥2 iterações/ajustes concretos descritos — 11 confirmados
+- [x] ≥2 iterações/ajustes concretos descritos — 12 confirmados
 
 ### Consistência geral
 
