@@ -70,8 +70,8 @@ normalmente?
 
 Superfície de API proposta (detalhamento completo de payloads e status codes fica no
 [FDD](./FDD.md)): CRUD de configuração de webhook (`POST/GET/PATCH/DELETE /webhooks`),
-consulta de histórico de entregas (`GET /webhooks/:id/deliveries`) e replay
-administrativo de DLQ.
+rotação de secret (`POST /webhooks/:id/rotate-secret`), consulta de histórico de
+entregas (`GET /webhooks/:id/deliveries`) e replay administrativo de DLQ.
 
 ## Alternativas consideradas
 

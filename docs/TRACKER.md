@@ -36,6 +36,7 @@ origem (regra de `CLAUDE.md`).
 | PRD-RISK-01 | docs/PRD.md | Risco | Vazamento de secret já ocorrido com outro cliente | TRANSCRICAO | [09:22] Diego |
 | PRD-RISK-02 | docs/PRD.md | Risco | Indisponibilidade de cliente de até 2h já observada | TRANSCRICAO | [09:16] Diego |
 | PRD-RISK-03 | docs/PRD.md | Risco | Cliente pode falhar em deduplicar corretamente | TRANSCRICAO | [09:25] Sofia |
+| PRD-RISK-04 | docs/PRD.md | Risco | Worker fora do ar para de processar a outbox — eventos ficam retidos como `pending`, sem perda | TRANSCRICAO | [09:11] Diego |
 | PRD-DEP-01 | docs/PRD.md | Dependência | Revisão de segurança da Sofia, ≥2 dias úteis, antes do deploy | TRANSCRICAO | [09:46] Sofia |
 | PRD-DEP-02 | docs/PRD.md | Dependência | Comunicação aos clientes via portal de desenvolvedor | TRANSCRICAO | [09:26] Marcos |
 | RFC-META-01 | docs/RFC.md | Restrição | Autoria do RFC atribuída à Larissa | TRANSCRICAO | [09:50] Larissa |
@@ -114,11 +115,12 @@ origem (regra de `CLAUDE.md`).
 Contagem exaustiva (verificada por busca automatizada na tabela acima, não por
 estimativa):
 
-- Total de linhas: 100 (99 até a rodada anterior de revisão + 1 nova linha,
-  `FDD-CONTRATO-09`, para o endpoint de rotação de secret adicionado ao FDD nesta
-  rodada — ver `README.md` iteração 9).
+- Total de linhas: 101 (99 até a 4ª rodada de revisão + `FDD-CONTRATO-09`, para o
+  endpoint de rotação de secret adicionado ao FDD na 5ª rodada, + `PRD-RISK-04`, para
+  o risco de indisponibilidade do worker, que existia no PRD sem linha correspondente
+  aqui — ver `README.md`, iterações 9 e 11).
 - Fonte `CODIGO`: 17 linhas (≥5 exigido).
-- Fonte `TRANSCRICAO`: 82 linhas com timestamp válido (82% do total, ≥70% exigido).
+- Fonte `TRANSCRICAO`: 83 linhas com timestamp válido (82% do total, ≥70% exigido).
 - 1 linha (`FDD-CONTRATO-08`) marcada como "Não informado" — hipótese/inferência sem
   origem em transcrição ou código — mantida no tracker exatamente para deixar essa
   lacuna visível, não para escondê-la. Não conta nem como `CODIGO` nem como

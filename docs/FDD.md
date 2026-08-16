@@ -301,7 +301,7 @@ que ninguém pronunciou — não confundir com decisão registrada.
 
 | Código | Status HTTP | Quando ocorre | Origem do nome |
 | --- | --- | --- | --- |
-| `WEBHOOK_NOT_FOUND` | 404 | `id` de webhook inexistente em GET/PATCH/DELETE | Literal (`TRANSCRICAO.md` [09:28] Bruno) |
+| `WEBHOOK_NOT_FOUND` | 404 | `id` de webhook inexistente em GET (listagem filtra, não gera 404), PATCH, DELETE ou POST `/rotate-secret` | Literal (`TRANSCRICAO.md` [09:28] Bruno) |
 | `WEBHOOK_INVALID_URL` | 400 | URL cadastrada não é `https` (`TRANSCRICAO.md` [09:23] Sofia) | Literal (`TRANSCRICAO.md` [09:28] Bruno) |
 | `WEBHOOK_SECRET_REQUIRED` | 400 | Operação que depende de secret sem secret configurada | Literal (`TRANSCRICAO.md` [09:28] Bruno); cenário de uso inferido |
 | `WEBHOOK_INVALID_EVENTS` | 400 | Lista `events` contém valor fora do enum `OrderStatus` | Inferência — segue o prefixo, nome não dito em ata |

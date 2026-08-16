@@ -438,8 +438,49 @@ documento de decisão para um documento de implementação. É o mais difícil d
 dos três, porque não deixa nenhum texto errado para achar — deixa um vazio, e vazio
 não aparece em busca de texto.
 
+## Terceiro adendo — mesmo a lacuna corrigida deixou um rastro de propagação
+
+Uma sexta rodada (Sonnet, instruído a verificar especificamente a correção da rodada
+anterior) confirmou que o endpoint de rotação de secret estava correto e completo, mas
+achou que a correção não tinha se propagado a dois **resumos** do pacote: a lista de
+endpoints em prosa no RFC ("Superfície de API proposta") e a linha da matriz de erros
+do FDD que descreve quando `WEBHOOK_NOT_FOUND` ocorre. Nenhum dos dois é uma
+contradição factual — o endpoint documentado estava certo — mas ambos são lugares que
+*resumem* informação que já existe em detalhe em outro lugar, e resumos são
+exatamente o tipo de texto que sobrevive sem atualização quando se corrige o detalhe
+sem procurar todo lugar que o resume.
+
+Isso refina ainda mais a Lição 04: não basta propagar uma correção para os documentos
+que compartilham a *decisão* — é preciso propagar também para os trechos que
+*resumem* o conjunto de decisões (listas de endpoints, tabelas-índice, parágrafos de
+"visão geral"). Esses resumos são discretamente fáceis de esquecer porque não são o
+lugar "principal" de nenhuma informação — são só um espelho dela.
+
+## Quarto adendo — cobertura agregada esconde seção sem rastreabilidade
+
+A auditoria de estado antes da entrega recontou por `grep` cada número que o pacote
+afirma sobre si mesmo. Todos bateram, menos um vínculo: o PRD lista 4 riscos, mas o
+Tracker só tinha 3 linhas `PRD-RISK-*`. O risco não rastreado — "worker fica fora do ar
+e para de processar a outbox" — não era invenção: tem origem legítima em [09:11] Diego
+e já aparecia no Tracker a partir do FDD (`FDD-RISK-01`). Faltava só o vínculo do lado
+do PRD.
+
+O que torna isso instrutivo é *por que* passou por seis rodadas de revisão: a métrica
+que todo mundo (inclusive eu) olhava era o percentual **agregado** — 82% das linhas com
+fonte de transcrição, muito acima do mínimo de 70%. Um número global saudável é
+exatamente o que permite uma seção inteira ficar sem cobertura sem disparar alarme.
+A verificação correta não é "o total passa do limite?", e sim "para cada seção de cada
+documento, a contagem de itens bate com a contagem de linhas do Tracker daquela seção?".
+
+Isto fecha um trio com as Lições 04 e seus adendos: a informação pode estar errada
+(contradição), pode não existir (lacuna original), ou pode existir corretamente em dois
+lugares **sem o vínculo entre eles** — e este terceiro caso é o mais silencioso dos
+três, porque nenhum documento está errado quando lido isoladamente.
+
 ## Próximos passos
 
-Nenhum de produção. Entrega final, revisada em 5 camadas (autor, autorrevisão em 2
+Nenhum de produção. Entrega final, revisada em 6 camadas (autor, autorrevisão em 2
 rodadas, avaliação docente independente em Opus, revisão independente em Fable,
-varredura de consistência cruzada em Opus), commitada e publicada no fork público.
+varredura de consistência cruzada em Opus, verificação de propagação em Sonnet) mais
+uma auditoria de estado com recontagem independente antes do commit final, commitada e
+publicada no fork público.

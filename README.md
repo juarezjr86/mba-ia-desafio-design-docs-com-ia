@@ -194,6 +194,29 @@ manteve os documentos presos aos fatos da reunião em vez de genéricos.
    (`FDD-CONTRATO-09`), e números desatualizados em `TASKS/010` (contagem de
    endpoints, percentual do Tracker) e uma inconsistência textual entre README e
    `licoes.md` sobre qual rodada era a "terceira" vs. "quarta" camada de revisão.
+10. **Sexta camada de revisão, em Sonnet, focada em verificar se a correção da
+    rodada anterior (endpoint de rotação de secret) foi propagada por completo.**
+    O endpoint em si estava correto, mas 2 lugares que resumem a superfície de API
+    não tinham sido atualizados: a "Superfície de API proposta" do RFC (lista os
+    grupos de endpoint em prosa, mas não citava a rotação) e a matriz de erros do FDD
+    (a linha `WEBHOOK_NOT_FOUND` não mencionava o novo endpoint entre os gatilhos).
+    Corrigidos. Esta rodada também foi a primeira a recontar todos os números
+    auto-relatados do pacote (Tracker, riscos, endpoints, ADRs) contra a contagem real
+    dos arquivos — sinal de que a precisão numérica estava convergindo, mesmo com um
+    resíduo de propagação ainda aparecendo.
+11. **Auditoria de estado antes da entrega final, com recontagem independente por
+    `grep` de cada número auto-relatado.** As contagens de RFs (12), RNFs (7),
+    endpoints (9), códigos `WEBHOOK_` (7), ADRs (6) e fontes do Tracker (17 `CODIGO`,
+    83 `TRANSCRICAO`) conferiram. A exceção foi uma lacuna de cobertura em sentido
+    inverso ao da iteração 9: lá o PRD prometia algo que o FDD não construía; aqui o
+    PRD listava um risco real — "worker fica fora do ar e para de processar a outbox"
+    ([09:11] Diego) — que **nenhuma linha do Tracker cobria** do lado do PRD, embora o
+    mesmo fato aparecesse rastreado a partir do FDD (`FDD-RISK-01`). O item existia e
+    tinha origem legítima; o que faltava era o vínculo de rastreabilidade. Corrigido
+    com a linha `PRD-RISK-04` e a recontagem da seção "Cobertura" do Tracker (100 →
+    101 linhas). Lição embutida: verificar cobertura do Tracker por *documento de
+    origem*, não só pelo total agregado — um percentual global saudável esconde
+    seções inteiras sem rastreabilidade.
 
 ## Como navegar a entrega
 

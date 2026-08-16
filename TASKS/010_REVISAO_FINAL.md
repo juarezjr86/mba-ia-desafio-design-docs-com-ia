@@ -62,9 +62,10 @@ Checklist preenchida abaixo.
 ### Tracker (`docs/TRACKER.md`)
 
 - [x] Arquivo existe, formato de tabela correto
-- [x] ≥80% dos itens identificáveis com linha correspondente — 100 linhas cobrindo
-      PRD/RFC/FDD/ADRs
-- [x] ≥70% das linhas com Fonte = TRANSCRICAO e timestamp válido — 82/100 (82%)
+- [x] ≥80% dos itens identificáveis com linha correspondente — 101 linhas cobrindo
+      PRD/RFC/FDD/ADRs (`PRD-RISK-04` acrescentada na auditoria de estado final, para o
+      risco de indisponibilidade do worker, que existia no PRD sem linha aqui)
+- [x] ≥70% das linhas com Fonte = TRANSCRICAO e timestamp válido — 83/101 (82%)
 - [x] ≥5 linhas com Fonte = CODIGO e caminho real — 17 confirmadas
 
 ### README (`README.md`)
@@ -73,7 +74,7 @@ Checklist preenchida abaixo.
       Prompts customizados, Iterações e ajustes, Como navegar)
 - [x] ≥1 ferramenta de IA listada — Claude Code
 - [x] ≥2 prompts customizados em bloco de código — 2 confirmados
-- [x] ≥2 iterações/ajustes concretos descritos — 9 confirmados
+- [x] ≥2 iterações/ajustes concretos descritos — 11 confirmados
 
 ### Consistência geral
 
